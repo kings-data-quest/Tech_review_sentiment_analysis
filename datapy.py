@@ -135,7 +135,7 @@ def clean_text(text, device_name=query):
     text = re.sub(device_name_regex, '', text)
 
     # Remove terms related to device
-    remove_terms = ['phone', 'review', 'display', 'use', 'upgrade', 'screen', 'battery', 'year', 'video', 'watch', 'note', 'life', 'google', 'galaxy', 'abl'] + device_name_terms
+    remove_terms = ['phone', 'review', 'display', 'use', 'upgrade', 'screen', 'battery', 'year', 'video', 'watch', 'note', 'life', 'google', 'galaxy', 'abl', 'will', 'samsung'] + device_name_terms
     remove_terms_regex = '|'.join(remove_terms)
     text = re.sub(remove_terms_regex, '', text)
 
@@ -159,7 +159,7 @@ def clean_text(text, device_name=query):
     stop_words = set(stopwords.words('english'))
     pos_words = []
     for word, pos in pos_tag(words):
-        if len(word) > 1:
+        if len(word) > 2:
             pos_words.append(word)
 
     # Stem the words
@@ -193,12 +193,16 @@ def analyze_sentiments(df):
     
     return df
 def generate_wordcloud(df):
-    comment_words = ' '.join(df['comments'])
-    wordcloud = WordCloud(width=800, height=400, background_color='white', max_words=150).generate(comment_words)
+    # Join the words in the cleaned comments to a single string
+    text = ' '.join(df['cleaned_comments'])
 
-    plt.figure(figsize=(10, 5))
+    # Create a word cloud object and generate the word cloud
+    wordcloud = WordCloud(width=800, height=400, background_color='black').generate(text)
+
+    # Plot the word cloud
+    plt.figure(figsize=(12,10))
     plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis('off')
+    plt.axis("off")
     plt.savefig('static/wordcloud.png')
 
 
@@ -238,7 +242,7 @@ def plot_sentiment_counts(df):
         label.set_fontweight('bold')
         label.set_fontsize(12)
 
-    plt.show()
+    plt.savefig('static/count.png')
 
 
 def plot_word_frequencies(df):
@@ -295,7 +299,8 @@ def plot_word_frequencies(df):
     plt.ylabel('Frequency')
 
     plt.tight_layout()
-    plt.show()
+
+    plt.savefig('static/frequency.png')
 
 def tokenize_comments(comment_series):
     # Combine the comments into a single string
