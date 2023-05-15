@@ -193,17 +193,14 @@ def analyze_sentiments(df):
     
     return df
 def generate_wordcloud(df):
-    # Join the words in the cleaned comments to a single string
-    text = ' '.join(df['cleaned_comments'])
+    comment_words = ' '.join(df['comments'])
+    wordcloud = WordCloud(width=800, height=400, background_color='white', max_words=150).generate(comment_words)
 
-    # Create a word cloud object and generate the word cloud
-    wordcloud = WordCloud(width=800, height=400, background_color='black').generate(text)
-
-    # Plot the word cloud
-    plt.figure(figsize=(12,10))
+    plt.figure(figsize=(10, 5))
     plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off")
-    plt.show()
+    plt.axis('off')
+    plt.savefig('static/wordcloud.png')
+
 
 def plot_sentiment_counts(df):
     # Set the style and color palette
