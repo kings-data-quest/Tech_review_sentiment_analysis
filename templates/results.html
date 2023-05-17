@@ -2,6 +2,30 @@
 <html>
 <head>
     <title>Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 800px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <h1>Results</h1>
@@ -9,7 +33,12 @@
     <h2>Word Cloud</h2>
     <img src="{{ url_for('static', filename='wordcloud.png') }}" alt="Word Cloud">
 
-    <h2>Additional Information</h2>
-    <p>You can add any additional information or messages here.</p>
+    <h2>Sentiment Counts</h2>
+    <img src="{{ url_for('static', filename='count.png') }}" alt="Sentiment Counts">
+
+    <h2>Word Frequencies</h2>
+    <img src="{{ url_for('static', filename='frequency.png') }}" alt="Word Frequencies">
 </body>
 </html>
+
+
